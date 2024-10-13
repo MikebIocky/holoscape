@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Images</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, .navbar, .main-container {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace;
+        }
+        body {
+            background-color: rgb(249, 244, 238);
+            color: #333;
+            text-transform: lowercase;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #ccc;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .brand {
+            font-weight: bold;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            margin-right: 20px;
+            color: #000;
+            text-decoration: none;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            font-family: 'Helvetica', sans-serif;
+        }
+        .navbar ul li {
+            margin-right: 15px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: #000;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 50px);
+            padding: 20px;
+        }
+        .upload-container {
+            text-align: center;
+        }
+        .upload-container input[type="file"] {
+            margin-top: 20px;
+        }
+        .flyout {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f9f4ee;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            border-radius: 10px;
+            min-width: 200px;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .flyout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .flyout-controls {
+            display: flex;
+            gap: 5px;
+        }
+        .flyout-controls button {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #fff;
+        }
+        .flyout-image {
+            width: 300px;
+            height: auto;
+            object-fit: contain;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            margin: 0;
+            padding: 0;
+        }
+        .resizable {
+            resize: both;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="mainpage.html" class="brand">:D</a>
+        <ul>
+            <li><a href="clock.html">clock</a></li>
+            <li><a href="calendar.html">calendar</a></li>
+            <li><a href="upload.html">upload works</a></li>
+            <li><a href="blog.html">blogs</a></li>
+            <li><a href="settings.html">settings</a></li>
+        </ul>
+    </div>
+    <div class="main-container">
+        <div class="upload-container">
+            <input type="file" id="file-input" accept="image/*" multiple>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        let flyoutCounter = 0;
+
+        fileInput.addEventListener('change', handleFileUpload);
+
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                createImageFlyout(files[i]);
+            }
+        }
+
+        function createImageFlyout(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const flyoutId = `flyout-${++flyoutCounter}`;
+                const flyout = document.createElement('div');
+                flyout.id = flyoutId;
+                flyout.className = 'flyout';
+
+                const flyoutHeader = document.createElement('div');
+                flyoutHeader.className = 'flyout-header';
+                flyoutHeader.innerHTML = `
+                    <span>${file.name}</span>
+                    <div class="flyout-controls">
+                        <button onclick="makeResizable('${flyoutId}')">&#8690;</button>
+                        <button onclick="minimizeFlyout('${flyoutId}')">&#8211;</button>
+                        <button onclick="closeFlyout('${flyoutId}')">&times;</button>
+                    </div>
+                `;
+
+                const img = new Image();
+                img.src = e.target.result;
+                img.className = 'flyout-image';
+
+                flyout.appendChild(flyoutHeader);
+                flyout.appendChild(img);
+                document.body.appendChild(flyout);
+                makeDraggable(flyout);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function minimizeFlyout(flyoutId) {
+            const flyout = document.getElementById(flyoutId);
+            if (flyout.style.display === 'none') {
+                flyout.style.display = 'block';
+            } else {
+                flyout.style.display = 'none';
+            }
+        }
+
+        function closeFlyout(flyoutId) {
+            const flyout = document.getElementById(flyoutId);
+            flyout.remove();
+        }
+
+        function makeResizable(flyoutId) {
+            const flyout = document.getElementById(flyoutId);
+            flyout.classList.add('resizable');
+        }
+
+        function makeDraggable(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                if (e.target.tagName === 'BUTTON') return;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                elmnt.style.cursor = 'grabbing';
+            }
+
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                let newTop = elmnt.offsetTop - pos2;
+                let newLeft = elmnt.offsetLeft - pos1;
+
+                // Restrict movement to within the viewport
+                const margin = 10;
+                newTop = Math.max(margin, Math.min(window.innerHeight - elmnt.offsetHeight - margin, newTop));
+                newLeft = Math.max(margin, Math.min(window.innerWidth - elmnt.offsetWidth - margin, newLeft));
+
+                elmnt.style.top = newTop + "px";
+                elmnt.style.left = newLeft + "px";
+                elmnt.style.transform = 'translate(0, 0)';
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                elmnt.style.cursor = 'grab';
+            }
+        }
+    </script>
+</body>
+</html>

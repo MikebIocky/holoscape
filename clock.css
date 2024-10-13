@@ -1,0 +1,128 @@
+
+        body, .navbar, .main-container, .flyout {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #ccc;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .brand {
+            font-weight: bold;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            margin-right: 20px;
+            color: #000;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            font-family: 'Helvetica', sans-serif;
+        }
+        .navbar ul li {
+            margin-right: 15px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: #000;
+        }
+        body {
+            background-color: rgb(249, 244, 238);
+            color: #333;
+            text-transform: lowercase;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .time {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .buttons button {
+            font-size: 1.2em;
+            padding: 10px;
+            margin: 5px;
+            background: #fff;
+            border: 1px solid #333;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        .buttons button:hover {
+            background: #e0e0e0;
+        }
+        .flyout {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f9f4ee;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            border-radius: 15px;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            resize: both;
+            overflow: auto;
+        }
+        .flyout-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            width: 100%;
+            cursor: move;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .flyout-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .editable-time {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 2.5em;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 200px;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            cursor: text;
+            border-bottom: 2px solid #ccc;
+        }
+        .flyout-content button {
+            font-size: 1.1em;
+            padding: 8px 20px;
+            margin: 5px;
+            background: #fff;
+            border: 1px solid #333;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        .flyout-content button:hover {
+            background: #e0e0e0;
+        }
