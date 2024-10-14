@@ -136,7 +136,7 @@
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('remember-me').checked;
             const validCredentials = [
-                { username: 'guy', password: 'santaisawesome' },
+                { username: 'guy', password: 'santa' },
                 { username: 'joey', password: 'soccer' },
                 { username: 'larry', password: 'parttimeteacher' },
                 { username: 'gary', password: 'joey' }
@@ -183,6 +183,9 @@
                 }
                 if (username === 'joey' && failedAttempts >= 3) {
                     startSoccerBallEffect();
+                if (username === "SOMETHINGINTERNAL" && failedAttempts >=3) {
+                    proceedtoHint1();
+                }
                 }
                 alert('Invalid username or password');
             }
@@ -190,6 +193,10 @@
 
         function proceedToMainPage() {
             window.location.href = 'mainpage.html';
+        }
+
+        function proceedToHint1() {
+            window.location.href = 'hint1.html';
         }
 
         function startHolidayEffect() {
