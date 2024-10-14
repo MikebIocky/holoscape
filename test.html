@@ -76,7 +76,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: #ffffff;
+            background: #000;
             border-radius: 50%;
             animation: moveBall 10s linear infinite;
         }
@@ -136,10 +136,11 @@
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('remember-me').checked;
             const validCredentials = [
-                { username: 'guy', password: 'santaisawesome' },
-                { username: 'joey', password: 'soccer' },
-                { username: 'larry', password: 'parttimeteacher' },
-                { username: 'gary', password: 'joey' }
+                { username: 'holoville', password: 'brooklyn' },
+                { username: 'guy', password: 'emery' },
+                { username: 'joey', password: 'cuba' },
+                { username: 'larry', password: 'blindfold' },
+                { username: 'gary', password: 'thrifting' }
             ];
             
             const isValid = validCredentials.some(cred => cred.username === username && cred.password === password);
