@@ -76,7 +76,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: #ffffff;
+            background: #000;
             border-radius: 50%;
             animation: moveBall 10s linear infinite;
         }
@@ -146,7 +146,6 @@
             const isSecretUser1 = username === 'SOMETHINGINTERNAL' && password === 'threefortyone';
             const isSecretUser2 = username === 'us_us_us' && password === '18';
             const isSecretUser3 = username === 'computer' && password === 'delete';
-
             
             if (isSecretUser1) {
                 window.location.href = 'secret1.html';
@@ -165,8 +164,8 @@
                     localStorage.removeItem('password');
                 }
                 failedAttempts = 0;
-                showUserInfo(username);
-                } else {
+                proceedToMainPage();
+            } else {
                 failedAttempts++;
                 if (username === 'gary' && failedAttempts >= 3) {
                     document.body.style.animation = 'glitch 1s infinite';
@@ -183,34 +182,22 @@
                 }
                 if (username === 'joey' && failedAttempts >= 3) {
                     startSoccerBallEffect();
-                if (username === "SOMETHINGINTERNAL" && failedAttempts >=3) {
-                    proceedtoHint1();
                 }
-                if (username === "us_us_us" && failedAttempts >=3) {
-                    proceedtoHint2();
+                if (username === 'SOMETHINGINTERNAL' && failedAttempts >= 3) {
+                    window.location.href = 'hint1.html';
                 }
-                if (username === "computer" && failedAttempts >=3) {
-                    proceedtoHint3();
+                if (username === 'us_us_us' && failedAttempts >= 3) {
+                    window.location.href = 'hint2.html';
+                }
+                if (username === 'computer' && failedAttempts >= 3) {
+                    window.location.href = 'hint3.html';
                 }
                 alert('Invalid username or password');
-            }
             }
         }
 
         function proceedToMainPage() {
             window.location.href = 'mainpage.html';
-        }
-
-        function proceedToHint1() {
-            window.location.href = 'hint1.html';
-        }
-
-        function proceedToHint2() {
-            window.location.href = 'hint2.html';
-        }
-
-        function proceedToHint3() {
-            window.location.href = 'hint3.html';
         }
 
         function startHolidayEffect() {
@@ -247,37 +234,6 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
-        }
-
-        function showUserInfo(username) {
-            let avatarSrc = '';
-            switch(username) {
-                case 'joey':
-                    avatarSrc = 'Png.png';
-                    break;
-                case 'larry':
-                    avatarSrc = 'Png (1).png';
-                    break;
-                case 'guy':
-                    avatarSrc = 'Png (2).png';
-                    break;
-                case 'gary':
-                    avatarSrc = 'Png (3).png';
-                    break;
-                default:
-                    avatarSrc = '';
-            }
-            document.querySelector('.login-box').innerHTML = `
-                <h2>confirmation</h2>
-                <img src="${avatarSrc}" alt="avatar" class="avatar">
-                <p>is this you, ${username}?</p>
-                <button onclick="proceedToMainPage()">yes</button>
-            `;
-            document.querySelector('.login-box').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    proceedToMainPage();
-                }
-            });
         }
 
         document.addEventListener('keydown', (e) => {
