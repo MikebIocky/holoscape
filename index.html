@@ -186,8 +186,14 @@
                 if (username === "SOMETHINGINTERNAL" && failedAttempts >=3) {
                     proceedtoHint1();
                 }
+                if (username === "us_us_us" && failedAttempts >=3) {
+                    proceedtoHint2();
+                }
+                if (username === "computer" && failedAttempts >=3) {
+                    proceedtoHint3();
                 }
                 alert('Invalid username or password');
+            }
             }
         }
 
@@ -197,6 +203,14 @@
 
         function proceedToHint1() {
             window.location.href = 'hint1.html';
+        }
+
+        function proceedToHint2() {
+            window.location.href = 'hint2.html';
+        }
+
+        function proceedToHint3() {
+            window.location.href = 'hint3.html';
         }
 
         function startHolidayEffect() {
