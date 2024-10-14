@@ -1,49 +1,79 @@
-
-body {
-    background: rgb(249, 244, 238);
-    font-family: 'Roboto Mono', monospace;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-transform: lowercase;
-}
-.navbar {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid #ccc;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-}
-.navbar .brand {
-    font-weight: bold;
-    font-size: 1.5em;
-    text-transform: uppercase;
-    margin-right: 20px;
-    color: #000;
-}
-.navbar ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-    font-family: 'Helvetica', sans-serif;
-}
-.navbar ul li {
-    margin-right: 15px;
-}
-.navbar ul li a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s;
-}
-.navbar ul li a:hover {
-    color: #000;
-}
-.main-screen {
-    padding: 20px;
-    height: calc(100vh - 50px);
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: rgb(192, 192, 192);
+            font-family: 'Roboto Mono', monospace;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #c0c0c0;
+            border-bottom: 2px solid #808080;
+            box-shadow: 2px 2px 0px #808080;
+            font-size: 0.9em;
+        }
+        .navbar .brand {
+            font-weight: bold;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            margin-right: 20px;
+            color: #000;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            font-family: 'Helvetica', sans-serif;
+        }
+        .navbar ul li {
+            margin-right: 15px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #000;
+            padding: 2px 4px;
+            background: #d3d3d3;
+            border: 1px solid #808080;
+            transition: background 0.3s;
+        }
+        .navbar ul li a:hover {
+            background: #a0a0a0;
+        }
+        .main-screen {
+            padding: 20px;
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+            background: #ffffff;
+            border: 2px solid #808080;
+            box-shadow: 4px 4px 0px #808080;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">:D</span>
+        <ul>
+            <li><a href="clock.html">clock</a></li>
+            <li><a href="calendar.html">calendar</a></li>
+            <li><a href="upload.html">upload works</a></li>
+            <li><a href="blog.html">blogs</a></li>
+            <li><a href="settings.html">settings</a></li>
+        </ul>
+    </div>
+    <div class="main-screen">
+        <!-- Main content goes here -->
+    </div>
+</body>
+</html>

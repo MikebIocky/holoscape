@@ -3,35 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        
         body, .navbar, .main-container {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Libre Franklin', sans-serif;
         }
         body {
-            background-color: rgb(249, 244, 238);
-            color: #333;
-            overflow: hidden;
+            background-color: #f0f0f0;
+            color: #000;
         }
         .navbar {
             display: flex;
             align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid #ccc;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            background: #000e80;
+            border-bottom: 2px solid #000;
+            box-shadow: 2px 2px 0px #000;
         }
         .navbar .brand {
             font-weight: bold;
             font-size: 1.5em;
             text-transform: uppercase;
             margin-right: 20px;
-            color: #000;
+            color: #fff;
             text-decoration: none;
         }
         .navbar ul {
@@ -39,171 +37,325 @@
             display: flex;
             padding: 0;
             margin: 0;
-            font-family: 'Helvetica', sans-serif;
         }
         .navbar ul li {
             margin-right: 15px;
         }
         .navbar ul li a {
             text-decoration: none;
-            color: #333;
+            color: #fff;
+            font-weight: 600;
             transition: color 0.3s;
         }
         .navbar ul li a:hover {
-            color: #000;
+            color: #ffcc00;
         }
         .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transform: scale(1.05);
-        }
-        .blog-container {
-            width: 100%;
-            max-width: 1400px;
-            display: flex;
-            gap: 40px;
-            animation: floatAnimation 2s ease-in-out infinite alternate;
-        }
-        .new-post-container {
-            width: 60%;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: box-shadow 0.3s ease;
-        }
-        .new-post-container:hover {
-            box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.2);
-        }
-        .posts-container {
-            width: 40%;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: box-shadow 0.3s ease;
-        }
-        .posts-container:hover {
-            box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            max-width: 700px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
         }
         .new-post {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
+            margin-bottom: 15px;
+        }
+        .new-post input[type="text"], .new-post textarea, .new-post input[type="file"] {
             width: 100%;
-        }
-        .new-post textarea {
-            width: 90%;
-            height: 100px;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-family: 'Roboto Mono', monospace;
+            max-width: 400px;
+            padding: 8px;
             margin-bottom: 10px;
-        }
-        .new-post input[type="file"] {
-            display: none;
-        }
-        .new-post input[type="text"] {
-            width: 90%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-family: 'Roboto Mono', monospace;
-            margin-bottom: 10px;
-        }
-        .new-post input[type="color"] {
-            margin-bottom: 10px;
-        }
-        .color-presets {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .color-presets button {
-            width: 30px;
-            height: 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .upload-label {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #007bff;
-            color: #fff;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            text-align: center;
-            transition: background 0.3s;
-        }
-        .upload-label:hover {
-            background: #0056b3;
+            border: 2px solid #000;
+            font-family: 'Libre Franklin', sans-serif;
+            resize: none;
         }
         .new-post button {
-            padding: 10px 20px;
-            border: none;
-            background: #333;
+            padding: 8px 16px;
+            background: #000e80;
             color: #fff;
-            border-radius: 10px;
+            border: 2px solid #000;
             cursor: pointer;
             transition: background 0.3s;
+            font-weight: bold;
         }
         .new-post button:hover {
-            background: #000;
+            background: #003366;
         }
         .post {
-            border-radius: 10px;
-            padding: 15px;
+            background: #ffffff;
+            padding: 10px;
             margin-bottom: 15px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            width: 90%;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
         }
-        .post-header {
+        .post .post-header {
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
         }
-        .post-content {
+        .post .post-content {
+            margin-bottom: 8px;
             font-size: 1em;
-            line-height: 1.5;
+            line-height: 1.4;
+        }
+        .post .post-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 0px #000;
         }
         .post-controls {
-            margin-top: 10px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         .post-controls button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 0.9em;
-            color: #333;
+            color: #000e80;
+            font-weight: bold;
             transition: color 0.3s;
+            font-size: 0.9em;
         }
         .post-controls button:hover {
-            color: #000;
+            color: #003366;
         }
-        @keyframes floatAnimation {
-            0% {
-                transform: translateY(0);
+        .reply-form {
+            margin-top: 8px;
+            padding: 8px;
+            background: #f9f9f9;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
+        }
+        .reply-form input[type="text"], .reply-form textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 6px;
+            margin-bottom: 8px;
+            border: 2px solid #000;
+            font-family: 'Libre Franklin', sans-serif;
+            resize: none;
+        }
+        .reply-form button {
+            padding: 6px 12px;
+            background: #000e80;
+            color: #fff;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        .reply-form button:hover {
+            background: #003366;
+        }
+        .reply {
+            margin-top: 8px;
+            padding: 8px;
+            border-left: 4px solid #ccc;
+            background: #f1f1f1;
+            box-shadow: 2px 2px 0px #000;
+        }
+        .reply strong {
+            font-weight: bold;
+        }
+        .theme-selector {
+            margin-bottom: 10px;
+        }
+        .theme-selector label {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .theme-selector input[type="color"] {
+            padding: 4px;
+            border: 2px solid #000;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply saved theme color from localStorage
+            const savedTheme = localStorage.getItem('themeColor');
+            if (savedTheme) {
+                document.body.style.backgroundColor = savedTheme;
             }
-            100% {
-                transform: translateY(-10px);
+            loadPosts();
+        });
+
+        function changeThemeColor() {
+            const themeColor = document.getElementById('theme-color').value;
+            document.body.style.backgroundColor = themeColor;
+            localStorage.setItem('themeColor', themeColor);
+        }
+
+        function addNewPost() {
+            const newPostText = document.getElementById('new-post-text').value;
+            const blogAuthor = document.getElementById('blog-author').value.trim() || 'anonymous';
+            const newPostImage = document.getElementById('new-post-image').files[0];
+
+            if (newPostText.trim() === '' && !newPostImage) return;
+
+            let imageUrl = '';
+            if (newPostImage) {
+                // Save image to localStorage
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    const post = {
+                        author: blogAuthor,
+                        content: newPostText,
+                        date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+                        imageUrl: imageUrl,
+                        replies: []
+                    };
+                    savePost(post);
+                    renderPost(post);
+                };
+                reader.readAsDataURL(newPostImage);
+            } else {
+                const post = {
+                    author: blogAuthor,
+                    content: newPostText,
+                    date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+                    imageUrl: imageUrl,
+                    replies: []
+                };
+                savePost(post);
+                renderPost(post);
+            }
+
+            document.getElementById('new-post-text').value = '';
+            document.getElementById('blog-author').value = '';
+            document.getElementById('new-post-image').value = '';
+        }
+
+        function savePost(post) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.push(post);
+            localStorage.setItem('posts', JSON.stringify(posts));
+        }
+
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.forEach(post => renderPost(post));
+        }
+
+        function renderPost(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+
+            const postHeader = document.createElement('div');
+            postHeader.className = 'post-header';
+            postHeader.textContent = `${post.author} - ${post.date}`;
+
+            const postContent = document.createElement('div');
+            postContent.className = 'post-content';
+            postContent.textContent = post.content;
+
+            postElement.appendChild(postHeader);
+            postElement.appendChild(postContent);
+
+            if (post.imageUrl) {
+                const postImage = document.createElement('img');
+                postImage.className = 'post-image';
+                postImage.src = post.imageUrl;
+                postElement.appendChild(postImage);
+            }
+
+            const postControls = document.createElement('div');
+            postControls.className = 'post-controls';
+
+            const likeButton = document.createElement('button');
+            likeButton.textContent = 'like';
+            likeButton.onclick = () => toggleLike(likeButton);
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'remove';
+            removeButton.onclick = () => removePost(postElement, post);
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'reply';
+            replyButton.onclick = () => showReplyForm(postElement, post);
+
+            postControls.appendChild(likeButton);
+            postControls.appendChild(removeButton);
+            postControls.appendChild(replyButton);
+
+            postElement.appendChild(postControls);
+
+            const repliesContainer = document.createElement('div');
+            repliesContainer.className = 'replies-container';
+            post.replies.forEach(reply => {
+                const replyElement = document.createElement('div');
+                replyElement.className = 'reply';
+                replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
+                repliesContainer.appendChild(replyElement);
+            });
+            postElement.appendChild(repliesContainer);
+
+            document.querySelector('.posts-container').prepend(postElement);
+        }
+
+        function toggleLike(button) {
+            if (button.textContent === 'like') {
+                button.textContent = 'liked';
+                button.style.color = '#ff0000';
+            } else {
+                button.textContent = 'like';
+                button.style.color = '#000e80';
             }
         }
 
-    </style>
+        function removePost(postElement, post) {
+            postElement.remove();
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const updatedPosts = posts.filter(p => p.date !== post.date);
+            localStorage.setItem('posts', JSON.stringify(updatedPosts));
+        }
+
+        function showReplyForm(postElement, post) {
+            let replyForm = postElement.querySelector('.reply-form');
+            if (!replyForm) {
+                replyForm = document.createElement('div');
+                replyForm.className = 'reply-form';
+                replyForm.innerHTML = `
+                    <input type="text" class="reply-author" placeholder="your name">
+                    <textarea class="reply-text" placeholder="write your reply..."></textarea>
+                    <button onclick="addReply(this, '${post.date}')">reply</button>
+                `;
+                postElement.appendChild(replyForm);
+            }
+        }
+
+        function addReply(button, postDate) {
+            const replyForm = button.parentElement;
+            const replyAuthor = replyForm.querySelector('.reply-author').value.trim() || 'anonymous';
+            const replyText = replyForm.querySelector('.reply-text').value.trim();
+
+            if (replyText === '') return;
+
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const post = posts.find(p => p.date === postDate);
+            const reply = {
+                author: replyAuthor,
+                content: replyText
+            };
+            post.replies.push(reply);
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            const replyElement = document.createElement('div');
+            replyElement.className = 'reply';
+            replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
+            replyForm.parentElement.querySelector('.replies-container').appendChild(replyElement);
+
+            replyForm.querySelector('.reply-author').value = '';
+            replyForm.querySelector('.reply-text').value = '';
+        }
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -217,148 +369,17 @@
         </ul>
     </div>
     <div class="main-container">
-        <div class="blog-container">
-            <div class="new-post-container">
-                <div class="new-post">
-                    <input type="text" id="blog-author" placeholder="enter your name">
-                    <input type="color" id="blog-color" value="#f9f9f9">
-                    <div class="color-presets">
-                        <button style="background-color: #c7d7ee" onclick="setColorPreset('#c7d7ee')"></button>
-                        <button style="background-color: #f6a0a3" onclick="setColorPreset('#f6a0a3')"></button>
-                        <button style="background-color: #bd8d79" onclick="setColorPreset('#bd8d79')"></button>
-                        <button style="background-color: #aadf9b" onclick="setColorPreset('#aadf9b')"></button>
-                    </div>
-                    <textarea id="new-post-text" placeholder="what's on your mind?"></textarea>
-                    <label for="new-post-file" class="upload-label">upload file</label>
-                    <input type="file" id="new-post-file" accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
-                    <button onclick="addNewPost()">post</button>
-                </div>
-            </div>
-            <div class="posts-container" id="posts-container"></div>
+        <div class="theme-selector">
+            <label for="theme-color">Select Theme Color:</label>
+            <input type="color" id="theme-color" onchange="changeThemeColor()">
         </div>
+        <div class="new-post">
+            <input type="text" id="blog-author" placeholder="enter your name">
+            <textarea id="new-post-text" placeholder="what's on your mind?"></textarea>
+            <input type="file" id="new-post-image" accept="image/*">
+            <button onclick="addNewPost()">post</button>
+        </div>
+        <div class="posts-container"></div>
     </div>
-
-    <script>
-        const postsContainer = document.getElementById('posts-container');
-
-        function addNewPost() {
-            const newPostText = document.getElementById('new-post-text').value;
-            const newPostFile = document.getElementById('new-post-file').files[0];
-            const blogAuthor = document.getElementById('blog-author').value.trim() || 'anonymous';
-            const blogColor = document.getElementById('blog-color').value;
-
-            if (newPostText.trim() === '' && !newPostFile) return;
-
-            const post = document.createElement('div');
-            post.className = 'post';
-            post.style.backgroundColor = blogColor;
-
-            const postHeader = document.createElement('div');
-            postHeader.className = 'post-header';
-            postHeader.textContent = blogAuthor;
-
-            const postContent = document.createElement('div');
-            postContent.className = 'post-content';
-            postContent.textContent = newPostText;
-
-            post.appendChild(postHeader);
-            post.appendChild(postContent);
-
-            if (newPostFile) {
-                const postAttachment = document.createElement('div');
-                postAttachment.className = 'post-attachment';
-                const fileURL = URL.createObjectURL(newPostFile);
-                if (newPostFile.type.startsWith('image/')) {
-                    const img = document.createElement('img');
-                    img.src = fileURL;
-                    img.style.maxWidth = '100%';
-                    img.style.borderRadius = '10px';
-                    postAttachment.appendChild(img);
-                } else {
-                    const link = document.createElement('a');
-                    link.href = fileURL;
-                    link.textContent = `view ${newPostFile.name}`;
-                    link.target = '_blank';
-                    postAttachment.appendChild(link);
-                }
-                post.appendChild(postAttachment);
-            }
-
-            const postControls = document.createElement('div');
-            postControls.className = 'post-controls';
-
-            const likeButton = document.createElement('button');
-            likeButton.textContent = 'like';
-            likeButton.onclick = () => toggleLike(likeButton);
-
-            const editButton = document.createElement('button');
-            editButton.textContent = 'edit';
-            editButton.onclick = () => editPost(postContent);
-
-            const responseButton = document.createElement('button');
-            responseButton.textContent = 'reply';
-            responseButton.onclick = () => addResponse(post);
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'delete';
-            deleteButton.onclick = () => deletePost(post);
-
-            postControls.appendChild(likeButton);
-            postControls.appendChild(editButton);
-            postControls.appendChild(responseButton);
-            postControls.appendChild(deleteButton);
-            post.appendChild(postControls);
-
-            postsContainer.prepend(post);
-
-            document.getElementById('new-post-text').value = '';
-            document.getElementById('new-post-file').value = '';
-            document.getElementById('blog-author').value = '';
-        }
-
-        function setColorPreset(color) {
-            document.getElementById('blog-color').value = color;
-        }
-
-        function toggleLike(button) {
-            if (button.textContent === 'like') {
-                button.textContent = 'liked';
-                button.style.color = '#007bff';
-            } else {
-                button.textContent = 'like';
-                button.style.color = '#333';
-            }
-        }
-
-        function editPost(postContent) {
-            const currentText = postContent.textContent;
-            const newTextArea = document.createElement('textarea');
-            newTextArea.value = currentText;
-            newTextArea.className = 'new-post-textarea';
-            postContent.replaceWith(newTextArea);
-
-            newTextArea.onblur = () => {
-                postContent.textContent = newTextArea.value;
-                newTextArea.replaceWith(postContent);
-            };
-        }
-
-        function addResponse(post) {
-            const responseText = prompt('write your response:');
-            if (responseText && responseText.trim() !== '') {
-                const response = document.createElement('div');
-                response.className = 'post-content';
-                response.style.marginTop = '10px';
-                response.style.paddingLeft = '10px';
-                response.style.borderLeft = '2px solid #ccc';
-                response.textContent = `you replied: ${responseText}`;
-                post.appendChild(response);
-            }
-        }
-
-        function deletePost(post) {
-            post.remove();
-        }
-    </script>
 </body>
 </html>

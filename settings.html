@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>settings</title>
+    <title>Settings</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        
         body {
-            background-color: #f0f0f0;
+            background: rgb(249, 244, 238);
             font-family: 'Roboto Mono', monospace;
             color: #333;
             margin: 0;
@@ -49,68 +48,61 @@
         .navbar ul li a:hover {
             color: #000;
         }
-        .settings-container {
+        .main-content {
             display: flex;
-            padding: 20px;
             gap: 20px;
+            padding: 20px;
         }
-        .settings-menu {
-            width: 200px;
+        .sidebar {
+            width: 250px;
             background: #fff;
-            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
-        .settings-menu ul {
+        .sidebar h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+        .sidebar ul {
             list-style: none;
             padding: 0;
         }
-        .settings-menu ul li {
+        .sidebar ul li {
             margin-bottom: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
         }
-        .settings-menu ul li:hover {
-            background: #f0f0f0;
-            border-radius: 5px;
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
         }
-        .settings-content {
+        .sidebar ul li a:hover {
+            color: #000;
+        }
+        .settings-container {
             flex-grow: 1;
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
         .settings-section {
-            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
-        .settings-section.active {
-            display: block;
+        .settings-section h3 {
+            margin-top: 0;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"], select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ccc;
+        .color-option {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
             border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            background: #333;
-            color: #fff;
-            border-radius: 5px;
+            margin: 10px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #000;
         }
     </style>
 </head>
@@ -125,71 +117,62 @@
             <li><a href="settings.html">settings</a></li>
         </ul>
     </div>
-    <div class="settings-container">
-        <div class="settings-menu">
+    <div class="main-content">
+        <div class="sidebar">
+            <h3>Settings Menu</h3>
             <ul>
-                <li onclick="showSection('general')">general</li>
-                <li onclick="showSection('account')">account</li>
+                <li><a href="#general-section">General</a></li>
+                <li><a href="#account-section">Account</a></li>
             </ul>
         </div>
-        <div class="settings-content">
-            <div id="general" class="settings-section active">
-                <h2>general settings</h2>
-                <div class="form-group">
-                    <label for="color-theme">color theme</label>
-                    <select id="color-theme">
-                        <option value="#c7d7ee">#c7d7ee</option>
-                        <option value="#f6a0a3">#f6a0a3</option>
-                        <option value="#bd8d79">#bd8d79</option>
-                        <option value="#aadf9b">#aadf9b</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="display-name">display name</label>
-                    <input type="text" id="display-name" placeholder="enter your display name">
-                </div>
-                <div class="form-group">
-                    <label for="language">language</label>
-                    <select id="language">
-                        <option value="english">english</option>
-                        <option value="spanish">spanish</option>
-                        <option value="french">french</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="website-version">website version</label>
-                    <select id="website-version">
-                        <option value="light">light</option>
-                        <option value="dark">dark</option>
-                    </select>
-                </div>
+        <div class="settings-container" id="general-section">
+            <div class="settings-section">
+                <h3>General</h3>
+                <p>Select a color theme:</p>
+                <div class="color-option" id="theme-blue" style="background-color: #c7d7ee;"></div>
+                <div class="color-option" id="theme-pink" style="background-color: #f6a0a3;"></div>
+                <div class="color-option" id="theme-brown" style="background-color: #bd8d79;"></div>
+                <div class="color-option" id="theme-green" style="background-color: #aadf9b;"></div>
             </div>
-            <div id="account" class="settings-section">
-                <h2>account settings</h2>
-                <div class="form-group">
-                    <label for="account-details">account details</label>
-                    <input type="text" id="account-details" value="username: holoville" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="change-info">change information</label>
-                    <input type="text" id="change-info" placeholder="update your information">
-                </div>
-                <button onclick="signOut()">sign out</button>
+            <div class="settings-section" id="account-section">
+                <h3>Account</h3>
+                <p>Account details and preferences.</p>
+                <button onclick="signOut()">Sign Out</button>
             </div>
         </div>
     </div>
     <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.settings-section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+        // Handle theme change and store in localStorage
+        document.querySelectorAll('.color-option').forEach(colorOption => {
+            colorOption.addEventListener('click', () => {
+                const color = colorOption.style.backgroundColor;
+                document.body.style.backgroundColor = color;
+                localStorage.setItem('themeColor', color);
+                applyThemeToOtherPages();
+            });
+        });
+
+        // Apply saved theme color from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor;
+            }
+        });
+
+        function applyThemeToOtherPages() {
+            const color = localStorage.getItem('themeColor');
+            if (color) {
+                localStorage.setItem('applyTheme', true);
+            }
         }
 
         function signOut() {
-            // Clear local storage to require sign in again
             localStorage.removeItem('rememberMe');
             localStorage.removeItem('username');
             localStorage.removeItem('password');
+            localStorage.removeItem('themeColor');
+            sessionStorage.clear();
             window.location.href = 'index.html';
         }
     </script>

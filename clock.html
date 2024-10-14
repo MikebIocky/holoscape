@@ -4,52 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>clock</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        
         body, .navbar, .main-container, .flyout {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        body {
+            background: #c0c0c0;
+            color: #000;
+            text-transform: none;
         }
         .navbar {
             display: flex;
             align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid #ccc;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            background: #000e80;
+            border-bottom: 2px solid #000;
+            box-shadow: 2px 2px 0px #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-size: 0.9em;
         }
         .navbar .brand {
             font-weight: bold;
             font-size: 1.5em;
             text-transform: uppercase;
             margin-right: 20px;
-            color: #000;
+            color: #fff;
         }
         .navbar ul {
             list-style: none;
             display: flex;
             padding: 0;
             margin: 0;
-            font-family: 'Helvetica', sans-serif;
         }
         .navbar ul li {
-            margin-right: 15px;
+            margin-right: 20px;
         }
         .navbar ul li a {
             text-decoration: none;
-            color: #333;
+            color: #fff;
+            font-weight: 600;
             transition: color 0.3s;
         }
         .navbar ul li a:hover {
-            color: #000;
-        }
-        body {
-            background-color: rgb(249, 244, 238);
-            color: #333;
-            text-transform: lowercase;
+            color: #ff0;
         }
         .main-container {
             display: flex;
@@ -57,33 +60,39 @@
             align-items: center;
             height: 100vh;
         }
+        .clock-container {
+            background: #f0f0f0;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px #000;
+        }
         .time {
             font-size: 2.5em;
             margin-bottom: 20px;
         }
         .buttons button {
+            font-family: 'Libre Franklin', sans-serif;
             font-size: 1.2em;
             padding: 10px;
             margin: 5px;
             background: #fff;
-            border: 1px solid #333;
+            border: 2px solid #000;
             cursor: pointer;
-            border-radius: 10px;
             transition: background 0.3s;
         }
         .buttons button:hover {
-            background: #e0e0e0;
+            background: #d3d3d3;
         }
         .flyout {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #f9f4ee;
+            background: #f0f0f0;
             padding: 20px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 4px 0px #000;
             z-index: 10;
-            border-radius: 15px;
+            border: 2px solid #000;
             min-width: 300px;
             display: flex;
             flex-direction: column;
@@ -99,7 +108,7 @@
             width: 100%;
             cursor: move;
             padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 2px solid #000;
         }
         .flyout-content {
             display: flex;
@@ -108,7 +117,7 @@
             margin-top: 15px;
         }
         .editable-time {
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Libre Franklin', sans-serif;
             font-size: 2.5em;
             text-align: center;
             padding: 10px;
@@ -119,33 +128,41 @@
             background-color: transparent;
             outline: none;
             cursor: text;
-            border-bottom: 2px solid #ccc;
+            border-bottom: 2px solid #000;
         }
         .flyout-content button {
             font-size: 1.1em;
             padding: 8px 20px;
             margin: 5px;
             background: #fff;
-            border: 1px solid #333;
+            border: 2px solid #000;
             cursor: pointer;
-            border-radius: 10px;
             transition: background 0.3s;
+            font-family: 'Libre Franklin', sans-serif;
         }
         .flyout-content button:hover {
-            background: #e0e0e0;
+            background: #d3d3d3;
         }
-
     </style>
+<script>
+        // Apply saved theme color from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor;
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="navbar">
         <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
         <ul>
-            <li><a href="clock.html">clock</a></li>
-            <li><a href="calendar.html">calendar</a></li>
-            <li><a href="upload.html">upload works</a></li>
-            <li><a href="blog.html">blogs</a></li>
-            <li><a href="settings.html">settings</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="upload.html">Upload works</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>
     <div class="main-container">
@@ -153,8 +170,8 @@
             <div id="local-time" class="time"></div>
             <div id="nyc-time" class="time"></div>
             <div class="buttons">
-                <button onclick="createFlyout('timer')">timer</button>
-                <button onclick="createFlyout('stopwatch')">stopwatch</button>
+                <button onclick="createFlyout('timer')">Timer</button>
+                <button onclick="createFlyout('stopwatch')">Stopwatch</button>
             </div>
         </div>
     </div>
@@ -167,8 +184,8 @@
 
         function updateTime() {
             const localTime = new Date();
-            localTimeElem.textContent = `local time: ${localTime.toLocaleTimeString()}`;
-            nycTimeElem.textContent = `nyc time: ${new Date(localTime.toLocaleString('en-US', { timeZone: 'America/New_York' })).toLocaleTimeString()}`;
+            localTimeElem.textContent = `Local time: ${localTime.toLocaleTimeString()}`;
+            nycTimeElem.textContent = `NYC time: ${new Date(localTime.toLocaleString('en-US', { timeZone: 'America/New_York' })).toLocaleTimeString()}`;
         }
         setInterval(updateTime, 1000);
 
@@ -182,14 +199,14 @@
                 <div class="flyout-content">
                     ${type === 'stopwatch' ? `
                         <div id="${flyoutId}-time" class="editable-time">00:00:00</div>
-                        <button onclick="startStopwatch('${flyoutId}')">start</button>
-                        <button onclick="stopStopwatch('${flyoutId}')">stop</button>
-                        <button onclick="resetStopwatch('${flyoutId}')">reset</button>
+                        <button onclick="startStopwatch('${flyoutId}')">Start</button>
+                        <button onclick="stopStopwatch('${flyoutId}')">Stop</button>
+                        <button onclick="resetStopwatch('${flyoutId}')">Reset</button>
                     ` : `
                         <input type="text" id="${flyoutId}-time-input" value="00:00:00" class="editable-time">
-                        <button onclick="startTimer('${flyoutId}')">start</button>
-                        <button onclick="pauseTimer('${flyoutId}')">pause</button>
-                        <button onclick="resetTimer('${flyoutId}')">reset</button>
+                        <button onclick="startTimer('${flyoutId}')">Start</button>
+                        <button onclick="pauseTimer('${flyoutId}')">Pause</button>
+                        <button onclick="resetTimer('${flyoutId}')">Reset</button>
                     `}
                 </div>
             `;
@@ -233,7 +250,7 @@
                 if (time <= 0) {
                     clearInterval(intervals[id]);
                     timeInputElem.value = '00:00:00';
-                    alert('time is up!');
+                    alert('Time is up!');
                 } else {
                     time--;
                     timeInputElem.value = formatTime(time);
