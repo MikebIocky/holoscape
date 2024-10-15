@@ -1,160 +1,140 @@
-
-        body, .navbar, .main-container, .calendar {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
-        }
-        body {
-            background-color: rgb(249, 244, 238);
-            color: #333;
-            text-transform: lowercase;
-        }
-        .navbar {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid #ccc;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-        }
-        .navbar .brand {
-            font-weight: bold;
-            font-size: 1.5em;
-            text-transform: uppercase;
-            margin-right: 20px;
-            color: #000;
-            text-decoration: none;
-        }
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            padding: 0;
-            margin: 0;
-            font-family: 'Helvetica', sans-serif;
-        }
-        .navbar ul li {
-            margin-right: 15px;
-        }
-        .navbar ul li a {
-            text-decoration: none;
-            color: #333;
-            transition: color 0.3s;
-        }
-        .navbar ul li a:hover {
-            color: #000;
-        }
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 50px);
-            padding: 20px;
-        }
-        .calendar {
-            width: 100%;
-            max-width: 800px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .calendar-header button {
-            background: #fff;
-            border: 1px solid #333;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .calendar-header button:hover {
-            background: #e0e0e0;
-        }
-        .calendar-header .month-year {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-        .calendar-day {
-            text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .calendar-day:hover {
-            background: #f0f0f0;
-            cursor: pointer;
-        }
-        .calendar-day-header {
-            font-weight: bold;
-        }
-        .flyout {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #f9f4ee;
-            padding: 20px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            border-radius: 15px;
-            min-width: 300px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            resize: both;
-            overflow: auto;
-        }
-        .flyout-header {
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-            text-align: center;
-            width: 100%;
-            cursor: move;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .flyout-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-        }
-        .note-textarea {
-            width: 100%;
-            max-width: 400px;
-            height: 150px;
-            padding: 10px;
-            font-size: 1em;
-            font-family: 'Roboto Mono', monospace;
-            border: 1px solid #333;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .note-controls {
-            display: flex;
-            gap: 10px;
-        }
-        .note-controls button {
-            font-size: 1em;
-            padding: 8px 15px;
-            background: #fff;
-            border: 1px solid #333;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .note-controls button:hover {
-            background: #e0e0e0;
-        }
+body, .navbar, .main-container, .calendar, .note-textarea, .calendar-day, .calendar-header button, .note-controls button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Libre Franklin', sans-serif;
+}
+body {
+    background: var(--theme-color, #c0c0c0);
+    color: #000;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: #000e80;
+    border-bottom: 2px solid #000;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar .brand {
+    font-weight: bold;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-right: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+.navbar ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+.navbar ul li {
+    margin-right: 20px;
+}
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+.navbar ul li a:hover {
+    color: #ff0;
+}
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 50px);
+    padding: 20px;
+}
+.calendar {
+    width: 100%;
+    max-width: 800px;
+    background: #e0e0e0;
+    border: 2px solid #000;
+    padding: 10px;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.calendar-header button {
+    background: #c0c0c0;
+    border: 2px solid #000;
+    color: #000;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.calendar-header .month-year {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #000;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.calendar-day {
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #000;
+    background: #fff;
+}
+.calendar-day-header {
+    font-weight: bold;
+    background: #c0c0c0;
+    padding: 10px;
+}
+.flyout {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e0e0e0;
+    padding: 15px;
+    border: 2px solid #000;
+    z-index: 100;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: grab;
+}
+.flyout-header {
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.25em;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #000;
+}
+.flyout-content {
+    margin-top: 15px;
+    width: 100%;
+}
+.note-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+    font-size: 1em;
+    border: 2px solid #000;
+    margin-bottom: 10px;
+}
+.note-controls {
+    display: flex;
+    gap: 5px;
+}
+.note-controls button {
+    font-size: 1em;
+    padding: 5px 10px;
+    background: #c0c0c0;
+    border: 2px solid #000;
+    cursor: pointer;
+}
