@@ -3,60 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title>Signbook</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="blog.css" />
+    <link rel="stylesheet" href="signbook.css" />
     <style>
-        .warning-container {
-            background-color: #ffffcc;
+        /* Temporary CSS for signbook until signbook.css is ready */
+        body, .navbar, .main-container {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
             color: #000;
-            padding: 20px;
-            border: 2px solid #ffcc00;
-            box-shadow: 4px 4px 0px #000;
-            margin-bottom: 20px;
-        }
-        .warning-container h2 {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #cc6600;
-            margin-bottom: 10px;
-        }
-        .warning-container p {
-            font-size: 1em;
-            line-height: 1.6;
         }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Apply saved theme color from localStorage
-            const savedTheme = localStorage.getItem('themeColor');
-            if (savedTheme) {
-                document.body.style.backgroundColor = savedTheme;
-            }
             loadPosts();
         });
 
-        function changeThemeColor() {
-            const themeColor = document.getElementById('theme-color').value;
-            document.body.style.backgroundColor = themeColor;
-            localStorage.setItem('themeColor', themeColor);
-        }
-
         function addNewPost() {
             const newPostText = document.getElementById('new-post-text').value;
-            const blogAuthor = document.getElementById('blog-author').value.trim() || 'anonymous';
+            const postAuthor = document.getElementById('post-author').value.trim() || 'anonymous';
             const newPostImage = document.getElementById('new-post-image').files[0];
 
             if (newPostText.trim() === '' && !newPostImage) return;
 
             let imageUrl = '';
             if (newPostImage) {
-                // Read image file and convert to URL
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imageUrl = e.target.result;
                     const post = {
-                        author: blogAuthor,
+                        author: postAuthor,
                         content: newPostText,
                         date: new Date().toISOString(),
                         imageUrl: imageUrl,
@@ -68,7 +49,7 @@
                 reader.readAsDataURL(newPostImage);
             } else {
                 const post = {
-                    author: blogAuthor,
+                    author: postAuthor,
                     content: newPostText,
                     date: new Date().toISOString(),
                     imageUrl: imageUrl,
@@ -79,19 +60,46 @@
             }
 
             document.getElementById('new-post-text').value = '';
-            document.getElementById('blog-author').value = '';
+            document.getElementById('post-author').value = '';
             document.getElementById('new-post-image').value = '';
         }
 
         function savePost(post) {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.push(post);
-            localStorage.setItem('posts', JSON.stringify(posts));
+            fetch('http://localhost:3000/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Post saved successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error saving post:', error);
+            });
         }
 
         function loadPosts() {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.forEach(post => renderPost(post));
+            fetch('http://localhost:3000/api/posts')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(posts => {
+                    posts.forEach(post => renderPost(post));
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                });
         }
 
         function renderPost(post) {
@@ -124,7 +132,6 @@
             replyButton.onclick = () => toggleReplyForm(postElement);
 
             postControls.appendChild(replyButton);
-
             postElement.appendChild(postControls);
 
             const repliesContainer = document.createElement('div');
@@ -165,51 +172,49 @@
 
             if (replyText === '') return;
 
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts.find(p => new Date(p.date).toLocaleString('en-US', { timeZone: 'America/New_York' }) === postDate);
-            const reply = {
-                author: replyAuthor,
-                content: replyText
-            };
-
-            if (post) {
-                post.replies.push(reply);
-                localStorage.setItem('posts', JSON.stringify(posts));
-            }
-
-            const replyElement = document.createElement('div');
-            replyElement.className = 'reply';
-            replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
-            postElement.querySelector('.replies-container').appendChild(replyElement);
-
-            replyForm.querySelector('.reply-author').value = '';
-            replyForm.querySelector('.reply-text').value = '';
+            fetch('http://localhost:3000/api/posts/reply', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date: postDate, reply: { author: replyAuthor, content: replyText } })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Reply added successfully:', data);
+                const replyElement = document.createElement('div');
+                replyElement.className = 'reply';
+                replyElement.innerHTML = `<strong>${replyAuthor}:</strong> ${replyText}`;
+                postElement.querySelector('.replies-container').appendChild(replyElement);
+                replyForm.querySelector('.reply-author').value = '';
+                replyForm.querySelector('.reply-text').value = '';
+            })
+            .catch(error => {
+                console.error('Error adding reply:', error);
+            });
         }
     </script>
 </head>
 <body>
     <div class="navbar">
-        <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
+        <a href="mainpage.html" class="brand" style="text-decoration: none;">Signbook</a>
         <ul>
             <li><a href="clock.html">Clock</a></li>
             <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="upload.html">Image desktop</a></li>
-            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="upload.html">Image Desktop</a></li>
+            <li><a href="signbook.html">Signbook</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>
     <div class="main-container">
-        <div class="warning-container">
-            <h2>Warning</h2>
-            <p>This feature isn't working correctly right now. Currently, there aren't any suitable replacements for this feature, so it has been temporarily deprecated. You are still able to use it, but all the uploaded images/GIFs/videos are only saved if you use the same browser. Other people won't be able to see them. Despite all of that, I have found the decent alternative place to upload your post out there, please go to this page: <a href="https://users3.smartgb.com/g/g.php?a=s&i=g36-37283-7f" target="_blank">guestbook</a>.</p>
-        </div>
-        <div class="theme-selector">
-            <label for="theme-color">Select theme color:</label>
-            <input type="color" id="theme-color" onchange="changeThemeColor()">
-        </div>
         <div class="new-post">
-            <input type="text" id="blog-author" placeholder="Name">
+            <input type="text" id="post-author" placeholder="Name">
             <textarea id="new-post-text" placeholder="What's on your mind?"></textarea>
             <input type="file" id="new-post-image" accept="image/*">
             <button onclick="addNewPost()">Post</button>
