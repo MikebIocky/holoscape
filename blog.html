@@ -242,15 +242,28 @@
         }
 
         function savePost(post) {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.push(post);
-            localStorage.setItem('posts', JSON.stringify(posts));
+            fetch('/savePost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post)
+            }).then(response => response.json()).then(data => {
+                console.log('Post saved successfully:', data);
+            }).catch(error => {
+                console.error('Error saving post:', error);
+            });
         }
 
         function loadPosts() {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            document.querySelector('.posts-container').innerHTML = ''; // Clear previous posts
-            posts.forEach(post => renderPost(post));
+            fetch('/loadPosts')
+                .then(response => response.json())
+                .then(posts => {
+                    posts.forEach(post => renderPost(post));
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                });
         }
 
         function renderPost(post) {
