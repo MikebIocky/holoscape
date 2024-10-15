@@ -192,6 +192,7 @@
                 document.body.style.backgroundColor = savedTheme;
             }
             loadPosts();
+            deployProject();
         });
 
         function changeThemeColor() {
@@ -209,14 +210,14 @@
 
             let imageUrl = '';
             if (newPostImage) {
-                // Save image to localStorage
+                // Read image file and convert to URL
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imageUrl = e.target.result;
                     const post = {
                         author: blogAuthor,
                         content: newPostText,
-                        date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+                        date: new Date().toISOString(),
                         imageUrl: imageUrl,
                         replies: []
                     };
@@ -228,7 +229,7 @@
                 const post = {
                     author: blogAuthor,
                     content: newPostText,
-                    date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+                    date: new Date().toISOString(),
                     imageUrl: imageUrl,
                     replies: []
                 };
@@ -242,28 +243,14 @@
         }
 
         function savePost(post) {
-            fetch('/savePost', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(post)
-            }).then(response => response.json()).then(data => {
-                console.log('Post saved successfully:', data);
-            }).catch(error => {
-                console.error('Error saving post:', error);
-            });
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.push(post);
+            localStorage.setItem('posts', JSON.stringify(posts));
         }
 
         function loadPosts() {
-            fetch('/loadPosts')
-                .then(response => response.json())
-                .then(posts => {
-                    posts.forEach(post => renderPost(post));
-                })
-                .catch(error => {
-                    console.error('Error loading posts:', error);
-                });
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.forEach(post => renderPost(post));
         }
 
         function renderPost(post) {
@@ -272,7 +259,7 @@
 
             const postHeader = document.createElement('div');
             postHeader.className = 'post-header';
-            postHeader.textContent = `${post.author} - ${post.date}`;
+            postHeader.textContent = `${post.author} - ${new Date(post.date).toLocaleString('en-US', { timeZone: 'America/New_York' })}`;
 
             const postContent = document.createElement('div');
             postContent.className = 'post-content';
@@ -338,21 +325,40 @@
             if (replyText === '') return;
 
             const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts.find(p => p.date === postDate);
+            const post = posts.find(p => new Date(p.date).toLocaleString('en-US', { timeZone: 'America/New_York' }) === postDate);
             const reply = {
                 author: replyAuthor,
                 content: replyText
             };
-            post.replies.push(reply);
-            localStorage.setItem('posts', JSON.stringify(posts));
+
+            if (post) {
+                post.replies.push(reply);
+                localStorage.setItem('posts', JSON.stringify(posts));
+            }
 
             const replyElement = document.createElement('div');
             replyElement.className = 'reply';
             replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
-            replyForm.parentElement.querySelector('.replies-container').appendChild(replyElement);
+            postElement.querySelector('.replies-container').appendChild(replyElement);
 
             replyForm.querySelector('.reply-author').value = '';
             replyForm.querySelector('.reply-text').value = '';
+        }
+
+        function deployProject() {
+            fetch('https://api.cloudflare.com/client/v4/accounts/4970ae1534c76f6630ce684cb25a940a/pages/projects/holoscape.site/deployments', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer 913bd865fec1af8ffbc06650ba3b97febfde8'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Deployment status:', data);
+            })
+            .catch(error => {
+                console.error('Error fetching deployment status:', error);
+            });
         }
     </script>
 </head>
