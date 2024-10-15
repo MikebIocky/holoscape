@@ -1,40 +1,36 @@
-import express from 'express';
-import fetch from 'node-fetch';
+const express = require('express');
+const fetch = require('node-fetch');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
 app.use(express.json());
+app.use(express.static('public')); // Serve your HTML from the "public" directory
 
-// Add middleware to handle CORS
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow any origin
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-
+// Endpoint to fetch Cloudflare deployment data
 app.get('/api/deployments', async (req, res) => {
     try {
         const response = await fetch('https://api.cloudflare.com/client/v4/accounts/4970ae1534c76f6630ce684cb25a940a/pages/projects/holoscape/deployments', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer tb5jNGF0-SsVbeBiAGWBWv7OHD0V31YEuEoqOakJ',
+                'Authorization': `Bearer v3gNlyQjc2kqe3n-ERaL-bLP2Vj0Xpj92N4MQbM1`,
                 'Content-Type': 'application/json'
             }
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            throw new Error('Network response was not ok');
         }
 
         const data = await response.json();
         res.json(data);
     } catch (error) {
-        res.status(500).send(`Error fetching deployment status: ${error.message}`);
+        console.error('Error fetching deployment status:', error);
+        res.status(500).send('Error fetching deployment status');
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Proxy server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Proxy server is running on http://localhost:${port}`);
 });

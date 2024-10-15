@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="blog.css"/>
+    <link rel="stylesheet" href="blog.css" />
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Apply saved theme color from localStorage
@@ -34,7 +35,7 @@
             if (newPostImage) {
                 // Read image file and convert to URL
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     imageUrl = e.target.result;
                     const post = {
                         author: blogAuthor,
@@ -167,7 +168,17 @@
             replyForm.querySelector('.reply-text').value = '';
         }
 
-        function deployProject() {
+        document.addEventListener('DOMContentLoaded', () => {
+        // Apply saved theme color from localStorage
+        const savedTheme = localStorage.getItem('themeColor');
+        if (savedTheme) {
+            document.body.style.backgroundColor = savedTheme;
+        }
+        loadPosts();
+        deployProject(); // Fetch Cloudflare deployment information
+    });
+
+    function deployProject() {
     fetch('http://localhost:3000/api/deployments', {
         method: 'GET'
     })
@@ -185,8 +196,10 @@
     });
 }
 
+
     </script>
 </head>
+
 <body>
     <div class="navbar">
         <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
@@ -213,4 +226,5 @@
         <div class="posts-container"></div>
     </div>
 </body>
+
 </html>
