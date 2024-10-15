@@ -6,16 +6,15 @@
     <title>clock</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body, .navbar, .main-container, .flyout {
+body, .navbar, .main-container {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Libre Franklin', sans-serif;
         }
         body {
-            background: #c0c0c0;
+            background-color: #f0f0f0;
             color: #000;
-            text-transform: none;
         }
         .navbar {
             display: flex;
@@ -24,10 +23,6 @@
             background: #000e80;
             border-bottom: 2px solid #000;
             box-shadow: 2px 2px 0px #000;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            font-size: 0.9em;
         }
         .navbar .brand {
             font-weight: bold;
@@ -35,6 +30,7 @@
             text-transform: uppercase;
             margin-right: 20px;
             color: #fff;
+            text-decoration: none;
         }
         .navbar ul {
             list-style: none;
@@ -43,7 +39,7 @@
             margin: 0;
         }
         .navbar ul li {
-            margin-right: 20px;
+            margin-right: 15px;
         }
         .navbar ul li a {
             text-decoration: none;
@@ -52,7 +48,7 @@
             transition: color 0.3s;
         }
         .navbar ul li a:hover {
-            color: #ff0;
+            color: #ffcc00;
         }
         .main-container {
             display: flex;
@@ -160,8 +156,9 @@
         <ul>
             <li><a href="clock.html">Clock</a></li>
             <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="upload.html">Upload works</a></li>
+            <li><a href="upload.html">Image desktop</a></li>
             <li><a href="blog.html">Blogs</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
             <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>

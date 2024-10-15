@@ -3,34 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>upload</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Upload Works - Classic UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body, .navbar, .main-container {
+        body, .navbar, .main-container, .flyout {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Libre Franklin', sans-serif;
         }
         body {
-            background-color: rgb(249, 244, 238);
-            color: #333;
-            text-transform: lowercase;
+            background: #c0c0c0;
+            color: #000;
         }
         .navbar {
             display: flex;
             align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid #ccc;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            background: #000e80;
+            border-bottom: 2px solid #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .navbar .brand {
             font-weight: bold;
             font-size: 1.5em;
             text-transform: uppercase;
             margin-right: 20px;
-            color: #000;
+            color: #fff;
             text-decoration: none;
         }
         .navbar ul {
@@ -38,57 +39,69 @@
             display: flex;
             padding: 0;
             margin: 0;
-            font-family: 'Helvetica', sans-serif;
         }
         .navbar ul li {
-            margin-right: 15px;
+            margin-right: 20px;
         }
         .navbar ul li a {
             text-decoration: none;
-            color: #333;
-            transition: color 0.3s;
+            color: #fff;
+            font-weight: 600;
         }
         .navbar ul li a:hover {
-            color: #000;
+            color: #ff0;
         }
         .main-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: calc(100vh - 50px);
+            min-height: calc(100vh - 50px);
             padding: 20px;
         }
         .upload-container {
             text-align: center;
         }
-        .upload-container input[type="file"] {
+        .upload-button {
             margin-top: 20px;
+            padding: 10px 20px;
+            border: 2px solid #000;
+            background: #c0c0c0;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        .upload-button:hover {
+            background: #a0a0a0;
+        }
+        .upload-button input[type="file"] {
+            display: none;
         }
         .flyout {
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #f9f4ee;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            background: #e0e0e0;
+            box-shadow: 2px 2px 0px #000;
             z-index: 10;
-            border-radius: 10px;
-            min-width: 200px;
-            max-width: 90%;
-            max-height: 90%;
+            border: 2px solid #000;
+            min-width: 300px;
+            max-width: 600px;
+            max-height: 400px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            resize: both;
         }
         .flyout-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background: #333;
+            padding: 5px;
+            background: #000e80;
             color: #fff;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-bottom: 2px solid #000;
+            cursor: move;
         }
         .flyout-controls {
             display: flex;
@@ -102,17 +115,13 @@
             color: #fff;
         }
         .flyout-image {
-            width: 300px;
+            width: 100%;
             height: auto;
             object-fit: contain;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
             margin: 0;
-            padding: 0;
-        }
-        .resizable {
-            resize: both;
-            overflow: auto;
+            padding: 10px;
+            border-top: 2px solid #000;
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -120,16 +129,20 @@
     <div class="navbar">
         <a href="mainpage.html" class="brand">:D</a>
         <ul>
-            <li><a href="clock.html">clock</a></li>
-            <li><a href="calendar.html">calendar</a></li>
-            <li><a href="upload.html">upload works</a></li>
-            <li><a href="blog.html">blogs</a></li>
-            <li><a href="settings.html">settings</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="upload.html">Image desktop</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>
     <div class="main-container">
         <div class="upload-container">
-            <input type="file" id="file-input" accept="image/*" multiple>
+            <label class="upload-button">
+                Upload Image
+                <input type="file" id="file-input" accept="image/*" multiple>
+            </label>
         </div>
     </div>
 
@@ -159,7 +172,6 @@
                 flyoutHeader.innerHTML = `
                     <span>${file.name}</span>
                     <div class="flyout-controls">
-                        <button onclick="makeResizable('${flyoutId}')">&#8690;</button>
                         <button onclick="minimizeFlyout('${flyoutId}')">&#8211;</button>
                         <button onclick="closeFlyout('${flyoutId}')">&times;</button>
                     </div>
@@ -172,7 +184,7 @@
                 flyout.appendChild(flyoutHeader);
                 flyout.appendChild(img);
                 document.body.appendChild(flyout);
-                makeDraggable(flyout);
+                makeDraggable(flyout, flyoutHeader);
             };
             reader.readAsDataURL(file);
         }
@@ -191,17 +203,11 @@
             flyout.remove();
         }
 
-        function makeResizable(flyoutId) {
-            const flyout = document.getElementById(flyoutId);
-            flyout.classList.add('resizable');
-        }
-
-        function makeDraggable(elmnt) {
+        function makeDraggable(elmnt, header) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            elmnt.onmousedown = dragMouseDown;
+            header.onmousedown = dragMouseDown;
 
             function dragMouseDown(e) {
-                if (e.target.tagName === 'BUTTON') return;
                 e.preventDefault();
                 pos3 = e.clientX;
                 pos4 = e.clientY;
@@ -235,7 +241,7 @@
                 elmnt.style.cursor = 'grab';
             }
         }
-            // Apply saved theme color from localStorage
+        // Apply saved theme color from localStorage
         document.addEventListener('DOMContentLoaded', () => {
             const savedColor = localStorage.getItem('themeColor');
             if (savedColor) {

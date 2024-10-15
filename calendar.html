@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>calendar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Classic Calendar UI Revamped</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        
-        body, .navbar, .main-container, .calendar {
+        body, .navbar, .main-container, .calendar, .note-textarea, .calendar-day, .calendar-header button, .note-controls button {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Libre Franklin', sans-serif;
         }
         body {
-            background-color: rgb(249, 244, 238);
-            color: #333;
-            text-transform: lowercase;
+            background: var(--theme-color, #c0c0c0);
+            color: #000;
         }
         .navbar {
             display: flex;
             align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid #ccc;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            background: #000e80;
+            border-bottom: 2px solid #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .navbar .brand {
             font-weight: bold;
             font-size: 1.5em;
             text-transform: uppercase;
             margin-right: 20px;
-            color: #000;
+            color: #fff;
             text-decoration: none;
         }
         .navbar ul {
@@ -39,154 +39,125 @@
             display: flex;
             padding: 0;
             margin: 0;
-            font-family: 'Helvetica', sans-serif;
         }
         .navbar ul li {
-            margin-right: 15px;
+            margin-right: 20px;
         }
         .navbar ul li a {
             text-decoration: none;
-            color: #333;
-            transition: color 0.3s;
+            color: #fff;
+            font-weight: 600;
         }
         .navbar ul li a:hover {
-            color: #000;
+            color: #ff0;
         }
         .main-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: calc(100vh - 50px);
+            min-height: calc(100vh - 50px);
             padding: 20px;
         }
         .calendar {
             width: 100%;
             max-width: 800px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            background: #e0e0e0;
+            border: 2px solid #000;
+            padding: 10px;
         }
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .calendar-header button {
-            background: #fff;
-            border: 1px solid #333;
-            padding: 10px;
+            background: #c0c0c0;
+            border: 2px solid #000;
+            color: #000;
+            padding: 5px 10px;
             cursor: pointer;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .calendar-header button:hover {
-            background: #e0e0e0;
         }
         .calendar-header .month-year {
-            font-size: 1.5em;
+            font-size: 1.25em;
             font-weight: bold;
+            color: #000;
         }
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
+            gap: 5px;
         }
         .calendar-day {
             text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        .calendar-day:hover {
-            background: #f0f0f0;
-            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #000;
+            background: #fff;
         }
         .calendar-day-header {
             font-weight: bold;
+            background: #c0c0c0;
+            padding: 10px;
         }
         .flyout {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #f9f4ee;
-            padding: 20px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            border-radius: 15px;
+            background: #e0e0e0;
+            padding: 15px;
+            border: 2px solid #000;
+            z-index: 100;
             min-width: 300px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            resize: both;
-            overflow: auto;
+            cursor: grab;
         }
         .flyout-header {
             font-weight: bold;
             margin-bottom: 15px;
-            font-size: 1.5em;
+            font-size: 1.25em;
             text-align: center;
             width: 100%;
-            cursor: move;
             padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 2px solid #000;
         }
         .flyout-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-top: 15px;
+            width: 100%;
         }
         .note-textarea {
             width: 100%;
-            max-width: 400px;
-            height: 150px;
-            padding: 10px;
+            height: 100px;
+            padding: 5px;
             font-size: 1em;
-            font-family: 'Roboto Mono', monospace;
-            border: 1px solid #333;
-            border-radius: 10px;
+            border: 2px solid #000;
             margin-bottom: 10px;
         }
         .note-controls {
             display: flex;
-            gap: 10px;
+            gap: 5px;
         }
         .note-controls button {
             font-size: 1em;
-            padding: 8px 15px;
-            background: #fff;
-            border: 1px solid #333;
+            padding: 5px 10px;
+            background: #c0c0c0;
+            border: 2px solid #000;
             cursor: pointer;
-            border-radius: 10px;
-            transition: background 0.3s;
         }
-        .note-controls button:hover {
-            background: #e0e0e0;
-        }
-
     </style>
-<script>
-        // Apply saved theme color from localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedColor = localStorage.getItem('themeColor');
-            if (savedColor) {
-                document.body.style.backgroundColor = savedColor;
-            }
-        });
-    </script>
 </head>
 <body>
     <div class="navbar">
-        <a href="mainpage.html" class="brand">:D</a>
+        <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
         <ul>
-            <li><a href="clock.html">clock</a></li>
-            <li><a href="calendar.html">calendar</a></li>
-            <li><a href="upload.html">upload works</a></li>
-            <li><a href="blog.html">blogs</a></li>
-            <li><a href="settings.html">settings</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="upload.html">Image desktop</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>
     <div class="main-container">
@@ -201,12 +172,21 @@
     </div>
 
     <script>
-        const monthYearElem = document.getElementById('month-year');
-        const calendarGridElem = document.getElementById('calendar-grid');
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('themeColor');
+            if (savedTheme) {
+                document.documentElement.style.setProperty('--theme-color', savedTheme);
+                document.body.style.backgroundColor = savedTheme;
+            }
+            renderCalendar(currentDate);
+        });
+
         let currentDate = new Date();
-        let notes = {}; // Store notes data
+        let notes = JSON.parse(localStorage.getItem('notes')) || {}; // Store notes data
 
         function renderCalendar(date) {
+            const monthYearElem = document.getElementById('month-year');
+            const calendarGridElem = document.getElementById('calendar-grid');
             const year = date.getFullYear();
             const month = date.getMonth();
             monthYearElem.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
@@ -240,6 +220,12 @@
                 dayElem.textContent = day;
                 dayElem.onclick = () => createNoteFlyout(day, month, year);
                 calendarGridElem.appendChild(dayElem);
+
+                // Highlight the day if there are notes
+                const flyoutId = `note-${day}-${month}-${year}`;
+                if (notes[flyoutId]) {
+                    dayElem.style.backgroundColor = notes[flyoutId].color;
+                }
             }
         }
 
@@ -263,19 +249,19 @@
 
             const flyout = document.createElement('div');
             flyout.id = flyoutId;
-            flyout.className = 'flyout draggable';
+            flyout.className = 'flyout';
             flyout.innerHTML = `
                 <div class="flyout-header">
-                    add note for ${day}/${month + 1}/${year}
-                    <button onclick="closeNoteFlyout('${flyoutId}')" style="float: right; background: none; border: none; font-size: 1.5em; cursor: pointer;">&times;</button>
+                    Add Note for ${day}/${month + 1}/${year}
+                    <button onclick="closeNoteFlyout('${flyoutId}');" style="float: right; background: none; border: none; font-size: 1.5em; cursor: pointer;">&times;</button>
                 </div>
                 <div class="flyout-content">
                     <textarea class="note-textarea" id="${flyoutId}-textarea"></textarea>
                     <div class="note-controls">
-                        <button onclick="changeNoteColor('${flyoutId}', 'yellow')">yellow</button>
-                        <button onclick="changeNoteColor('${flyoutId}', 'pink')">pink</button>
-                        <button onclick="changeNoteColor('${flyoutId}', 'lightblue')">light blue</button>
-                        <button onclick="deleteNoteFlyout('${flyoutId}')">delete</button>
+                        <button onclick="changeNoteColor('${flyoutId}', 'yellow')">Yellow</button>
+                        <button onclick="changeNoteColor('${flyoutId}', 'pink')">Pink</button>
+                        <button onclick="changeNoteColor('${flyoutId}', 'lightblue')">Light Blue</button>
+                        <button onclick="deleteNoteFlyout('${flyoutId}')">Delete</button>
                     </div>
                 </div>
             `;
@@ -287,38 +273,9 @@
                 document.getElementById(`${flyoutId}-textarea`).value = notes[flyoutId].content;
                 flyout.style.backgroundColor = notes[flyoutId].color;
             }
-        }
 
-        function changeNoteColor(flyoutId, color) {
-            const flyout = document.getElementById(flyoutId);
-            flyout.style.backgroundColor = color;
-            saveNoteContent(flyoutId);
-        }
-
-        function closeNoteFlyout(flyoutId) {
-            const flyout = document.getElementById(flyoutId);
-            if (flyout) {
-                saveNoteContent(flyoutId);
-                flyout.style.display = 'none';
-            }
-        }
-
-        function deleteNoteFlyout(flyoutId) {
-            const flyout = document.getElementById(flyoutId);
-            if (flyout) {
-                document.body.removeChild(flyout);
-                delete notes[flyoutId];
-            }
-        }
-
-        function saveNoteContent(flyoutId) {
-            const textarea = document.getElementById(`${flyoutId}-textarea`);
-            if (textarea) {
-                notes[flyoutId] = {
-                    content: textarea.value,
-                    color: document.getElementById(flyoutId).style.backgroundColor || 'white'
-                };
-            }
+            // Update day highlight color immediately
+            updateDayHighlight(day, month, year, notes[flyoutId] ? notes[flyoutId].color : '');
         }
 
         function makeDraggable(elmnt) {
@@ -361,8 +318,58 @@
             }
         }
 
-        // Initial render
-        renderCalendar(currentDate);
+        function changeNoteColor(flyoutId, color) {
+            const flyout = document.getElementById(flyoutId);
+            flyout.style.backgroundColor = color;
+            saveNoteContent(flyoutId);
+
+            // Update day highlight color immediately
+            const [_, day, month, year] = flyoutId.split('-');
+            updateDayHighlight(day, month, year, color);
+        }
+
+        function closeNoteFlyout(flyoutId) {
+            const flyout = document.getElementById(flyoutId);
+            if (flyout) {
+                saveNoteContent(flyoutId);
+                flyout.style.display = 'none';
+            }
+        }
+
+        function deleteNoteFlyout(flyoutId) {
+            const flyout = document.getElementById(flyoutId);
+            if (flyout) {
+                document.body.removeChild(flyout);
+                delete notes[flyoutId];
+                localStorage.setItem('notes', JSON.stringify(notes));
+
+                // Remove day highlight immediately
+                const [_, day, month, year] = flyoutId.split('-');
+                updateDayHighlight(day, month, year, '');
+            }
+        }
+
+        function saveNoteContent(flyoutId) {
+            const textarea = document.getElementById(`${flyoutId}-textarea`);
+            if (textarea) {
+                notes[flyoutId] = {
+                    content: textarea.value,
+                    color: document.getElementById(flyoutId).style.backgroundColor || 'white'
+                };
+                localStorage.setItem('notes', JSON.stringify(notes));
+
+                // Update day highlight color immediately
+                const [_, day, month, year] = flyoutId.split('-');
+                updateDayHighlight(day, month, year, notes[flyoutId].color);
+            }
+        }
+
+        function updateDayHighlight(day, month, year, color) {
+            const dayElem = document.querySelector(`.calendar-day[onclick="createNoteFlyout(${day}, ${month}, ${year})"]`);
+            if (dayElem) {
+                dayElem.style.backgroundColor = color || '#fff';
+            }
+        }
     </script>
 </body>
 </html>

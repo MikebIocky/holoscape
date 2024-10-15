@@ -51,31 +51,30 @@
             color: #ffcc00;
         }
         .main-container {
-            padding: 10px;
-            max-width: 700px;
-            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            margin: 40px auto;
             background: #ffffff;
             border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
         .new-post {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 20px;
             border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
-            margin-bottom: 15px;
+            box-shadow: 4px 4px 0px #000;
+            margin-bottom: 20px;
         }
         .new-post input[type="text"], .new-post textarea, .new-post input[type="file"] {
-            width: 100%;
-            max-width: 400px;
-            padding: 8px;
-            margin-bottom: 10px;
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-bottom: 15px;
             border: 2px solid #000;
             font-family: 'Libre Franklin', sans-serif;
             resize: none;
         }
         .new-post button {
-            padding: 8px 16px;
+            padding: 10px 20px;
             background: #000e80;
             color: #fff;
             border: 2px solid #000;
@@ -88,31 +87,33 @@
         }
         .post {
             background: #ffffff;
-            padding: 10px;
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
         .post .post-header {
             font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            color: #000e80;
         }
         .post .post-content {
-            margin-bottom: 8px;
+            margin-bottom: 15px;
             font-size: 1em;
-            line-height: 1.4;
+            line-height: 1.6;
+            color: #333;
         }
         .post .post-image {
             max-width: 100%;
             height: auto;
-            margin-bottom: 8px;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 0px #000;
+            margin-bottom: 15px;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px #000;
         }
         .post-controls {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
         .post-controls button {
             background: none;
@@ -127,23 +128,22 @@
             color: #003366;
         }
         .reply-form {
-            margin-top: 8px;
-            padding: 8px;
+            margin-top: 15px;
+            padding: 15px;
             background: #f9f9f9;
             border: 2px solid #000;
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
         .reply-form input[type="text"], .reply-form textarea {
-            width: 100%;
-            max-width: 400px;
-            padding: 6px;
-            margin-bottom: 8px;
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-bottom: 10px;
             border: 2px solid #000;
             font-family: 'Libre Franklin', sans-serif;
             resize: none;
         }
         .reply-form button {
-            padding: 6px 12px;
+            padding: 10px 20px;
             background: #000e80;
             color: #fff;
             border: 2px solid #000;
@@ -155,17 +155,18 @@
             background: #003366;
         }
         .reply {
-            margin-top: 8px;
-            padding: 8px;
-            border-left: 4px solid #ccc;
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid #000;
             background: #f1f1f1;
-            box-shadow: 2px 2px 0px #000;
+            box-shadow: 3px 3px 0px #000;
         }
         .reply strong {
             font-weight: bold;
+            color: #000e80;
         }
         .theme-selector {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .theme-selector label {
             font-weight: bold;
@@ -353,25 +354,26 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="mainpage.html" class="brand">:D</a>
+        <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
         <ul>
-            <li><a href="clock.html">clock</a></li>
-            <li><a href="calendar.html">calendar</a></li>
-            <li><a href="upload.html">upload works</a></li>
-            <li><a href="blog.html">blogs</a></li>
-            <li><a href="settings.html">settings</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="upload.html">Image desktop</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="settings.html">Settings</a></li>
         </ul>
     </div>
     <div class="main-container">
         <div class="theme-selector">
-            <label for="theme-color">Select Theme Color:</label>
+            <label for="theme-color">Select theme color:</label>
             <input type="color" id="theme-color" onchange="changeThemeColor()">
         </div>
         <div class="new-post">
-            <input type="text" id="blog-author" placeholder="enter your name">
-            <textarea id="new-post-text" placeholder="what's on your mind?"></textarea>
+            <input type="text" id="blog-author" placeholder="Name">
+            <textarea id="new-post-text" placeholder="What's on your mind?"></textarea>
             <input type="file" id="new-post-image" accept="image/*">
-            <button onclick="addNewPost()">post</button>
+            <button onclick="addNewPost()">Post</button>
         </div>
         <div class="posts-container"></div>
     </div>

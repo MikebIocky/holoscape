@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body, .navbar, .gallery-container, .upload-form {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        body {
+            background: #c0c0c0;
+            color: #000;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #000e80;
+            border-bottom: 2px solid #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar .brand {
+            font-weight: bold;
+            font-size: 1.5em;
+            text-transform: none;
+            margin-right: 20px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        .navbar ul li {
+            margin-right: 20px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+        }
+        .navbar ul li a:hover {
+            color: #ff0;
+        }
+        .gallery-container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .upload-form {
+            background: #ffffff;
+            padding: 20px;
+            border: 2px solid #000e80;
+            margin-bottom: 25px;
+            box-shadow: 4px 4px 0px #222;
+            width: calc(100% - 24px);
+        }
+        .upload-form h3 {
+            margin-top: 0;
+            text-transform: none;
+            font-size: 1.2em;
+            color: #000e80;
+        }
+        .upload-form input[type="text"], .upload-form textarea {
+            width: calc(100% - 24px);
+            padding: 8px;
+            margin: 10px 0;
+            border: 2px solid #000e80;
+            font-size: 0.9em;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        .upload-form textarea {
+            resize: none;
+        }
+        .upload-form input[type="file"] {
+            padding: 8px;
+            border: 2px solid #000e80;
+            background: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            width: calc(100% - 24px);
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        .upload-button {
+            padding: 12px;
+            border: none;
+            background: #000e80;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            text-transform: none;
+            transition: background 0.3s;
+            width: calc(100% - 5px);
+            margin-top: 20px;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        .upload-button:hover {
+            background: #ffb400;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            background: #fff;
+            border: 2px solid #000e80;
+            padding: 10px;
+            box-shadow: 3px 3px 0px #222;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .gallery-item .info {
+            font-size: 0.9em;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="mainpage.html" class="brand" style="text-decoration: none;">:D</a>
+        <ul>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="upload.html">Image desktop</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </div>
+    <div class="gallery-container">
+        <div class="upload-form">
+            <h3>Gallery uploader</h3>
+            <input type="text" id="uploader-name" placeholder="Name">
+            <input type="text" id="context" placeholder="Context of the image">
+            <input type="file" id="image-input" accept="image/*,video/*">
+            <button class="upload-button" onclick="uploadImage()">Upload image</button>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+    <script>
+        const galleryGrid = document.getElementById('gallery-grid');
+        const imageInput = document.getElementById('image-input');
+
+        // Load items from local storage on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedGalleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
+            savedGalleryItems.forEach(item => {
+                addGalleryItem(item.name, item.context, item.dataUrl, item.time);
+            });
+
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor;
+            }
+        });
+
+        function uploadImage() {
+            const name = document.getElementById('uploader-name').value.trim();
+            const context = document.getElementById('context').value.trim();
+            const file = imageInput.files[0];
+
+            if (!name || !context || !file) {
+                return; // Ensures that name, context, and file are all provided
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const currentTime = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+                addGalleryItem(name, context, e.target.result, currentTime);
+                saveGalleryItem(name, context, e.target.result, currentTime);
+
+                // Clear the form after successful upload
+                document.getElementById('uploader-name').value = '';
+                document.getElementById('context').value = '';
+                imageInput.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addGalleryItem(name, context, dataUrl, time) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+
+            let mediaElement;
+            if (dataUrl.startsWith('data:image')) {
+                mediaElement = document.createElement('img');
+            } else if (dataUrl.startsWith('data:video')) {
+                mediaElement = document.createElement('video');
+                mediaElement.controls = true;
+            }
+            mediaElement.src = dataUrl;
+            galleryItem.appendChild(mediaElement);
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'info';
+            infoDiv.innerHTML = `<strong>Uploaded by:</strong> ${name}<br>
+                                 <strong>Context:</strong> ${context}<br>
+                                 <strong>Time:</strong> ${time}`;
+            galleryItem.appendChild(infoDiv);
+
+            galleryGrid.appendChild(galleryItem);
+        }
+
+        function saveGalleryItem(name, context, dataUrl, time) {
+            const savedGalleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
+            savedGalleryItems.push({ name, context, dataUrl, time });
+            localStorage.setItem('galleryItems', JSON.stringify(savedGalleryItems));
+        }
+    </script>
+</body>
+</html>
