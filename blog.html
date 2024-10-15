@@ -114,18 +114,20 @@
         .post-controls {
             display: flex;
             gap: 10px;
+            margin-top: 10px;
         }
         .post-controls button {
-            background: none;
-            border: none;
+            padding: 8px 16px;
+            background: #000e80;
+            border: 2px solid #000;
+            color: #fff;
             cursor: pointer;
-            color: #000e80;
+            transition: background 0.3s;
             font-weight: bold;
-            transition: color 0.3s;
             font-size: 0.9em;
         }
         .post-controls button:hover {
-            color: #003366;
+            background: #003366;
         }
         .reply-form {
             margin-top: 15px;
@@ -270,20 +272,10 @@
             const postControls = document.createElement('div');
             postControls.className = 'post-controls';
 
-            const likeButton = document.createElement('button');
-            likeButton.textContent = 'like';
-            likeButton.onclick = () => toggleLike(likeButton);
-
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'remove';
-            removeButton.onclick = () => removePost(postElement, post);
-
             const replyButton = document.createElement('button');
-            replyButton.textContent = 'reply';
-            replyButton.onclick = () => showReplyForm(postElement, post);
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => toggleReplyForm(postElement);
 
-            postControls.appendChild(likeButton);
-            postControls.appendChild(removeButton);
             postControls.appendChild(replyButton);
 
             postElement.appendChild(postControls);
@@ -301,33 +293,26 @@
             document.querySelector('.posts-container').prepend(postElement);
         }
 
-        function toggleLike(button) {
-            if (button.textContent === 'like') {
-                button.textContent = 'liked';
-                button.style.color = '#ff0000';
-            } else {
-                button.textContent = 'like';
-                button.style.color = '#000e80';
-            }
-        }
-
-
-        function showReplyForm(postElement, post) {
+        function toggleReplyForm(postElement) {
             let replyForm = postElement.querySelector('.reply-form');
-            if (!replyForm) {
+            if (replyForm) {
+                replyForm.remove();
+            } else {
                 replyForm = document.createElement('div');
                 replyForm.className = 'reply-form';
                 replyForm.innerHTML = `
-                    <input type="text" class="reply-author" placeholder="your name">
-                    <textarea class="reply-text" placeholder="write your reply..."></textarea>
-                    <button onclick="addReply(this, '${post.date}')">reply</button>
+                    <input type="text" class="reply-author" placeholder="Your name">
+                    <textarea class="reply-text" placeholder="Write your reply..."></textarea>
+                    <button onclick="addReply(this)">Reply</button>
                 `;
                 postElement.appendChild(replyForm);
             }
         }
 
-        function addReply(button, postDate) {
+        function addReply(button) {
             const replyForm = button.parentElement;
+            const postElement = replyForm.closest('.post');
+            const postDate = postElement.querySelector('.post-header').textContent.split(' - ')[1];
             const replyAuthor = replyForm.querySelector('.reply-author').value.trim() || 'anonymous';
             const replyText = replyForm.querySelector('.reply-text').value.trim();
 
