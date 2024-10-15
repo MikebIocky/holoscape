@@ -310,12 +310,6 @@
             }
         }
 
-        function removePost(postElement, post) {
-            postElement.remove();
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const updatedPosts = posts.filter(p => p.date !== post.date);
-            localStorage.setItem('posts', JSON.stringify(updatedPosts));
-        }
 
         function showReplyForm(postElement, post) {
             let replyForm = postElement.querySelector('.reply-form');

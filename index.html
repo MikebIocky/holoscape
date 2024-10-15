@@ -79,17 +79,6 @@
             font-size: 1em;
             color: #444;
         }
-        .soccer-ball {
-            position: absolute;
-            font-size: 50px;
-            animation: moveBall 10s linear infinite;
-        }
-        .holiday-text {
-            position: absolute;
-            font-size: 1.5em;
-            color: #fff;
-            animation: fadeInOut 3s ease-in-out;
-        }
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
@@ -101,75 +90,6 @@
         @keyframes glitch {
             0%, 100% { background: linear-gradient(to right, #c7d7ee 25%, #f6a0a3 25%, #f6a0a3 50%, #bd8d79 50%, #bd8d79 75%, #aadf9b 75%); }
             50% { background: linear-gradient(to right, #c7d7ee 25%, #f6a0a3 25%, #f6a0a3 50%, #aadf9b 50%, #aadf9b 75%, #bd8d79 75%); }
-        }
-        @keyframes moveBall {
-            0% { top: 0; left: 0; }
-            25% { top: 0; left: calc(100% - 50px); transform: rotate(90deg); }
-            50% { top: calc(100% - 50px); left: calc(100% - 50px); transform: rotate(180deg); }
-            75% { top: calc(100% - 50px); left: 0; transform: rotate(270deg); }
-            100% { top: 0; left: 0; transform: rotate(360deg); }
-        }
-            25% { top: 0; left: 100%; transform: translate(-100%, 0) rotate(90deg); }
-            50% { top: 100%; left: 100%; transform: translate(-100%, -100%) rotate(180deg); }
-            75% { top: 100%; left: 0; transform: translate(0, -100%) rotate(270deg); }
-            100% { top: 0; left: 0; transform: translate(0, 0) rotate(360deg); }
-        }
-            25% { top: 0; left: 100%; transform: translate(-100%, 0); }
-            50% { top: 100%; left: 100%; transform: translate(-100%, -100%); }
-            75% { top: 100%; left: 0; transform: translate(0, -100%); }
-            100% { top: 0; left: 0; transform: translate(0, 0); }
-        }
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-        .userinfo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            animation: fadeIn 1s ease-in-out;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .userinfo-box {
-            padding: 25px;
-            background: #f0f0f0;
-            border: 2px solid #000;
-            width: 400px;
-            box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            font-family: 'Libre Franklin', sans-serif;
-        }
-        .userinfo-box h2 {
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            color: #444;
-            text-transform: none;
-        }
-        .profile-picture {
-            width: 100px;
-            height: 100px;
-            border: 2px solid #000;
-            margin-bottom: 20px;
-        }
-        .userinfo-box button {
-            padding: 12px;
-            width: 100%;
-            border: 2px solid #000;
-            background: #007bff;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1em;
-            text-transform: none;
-            transition: background 0.3s, transform 0.2s;
-        }
-        .userinfo-box button:hover {
-            background: #0056b3;
-            transform: scale(1.05);
         }
     </style>
 </head>
@@ -196,7 +116,7 @@
             { username: 'gary', password: 'joey', data: { themeColor: '#bd8d79', displayName: 'Gary' } },
             { username: 'SOMETHINGINTERNAL', password: 'threefortyone', data: { theme: 'secret', displayName: 'Internal User' } },
             { username: 'us_us_us', password: '18', data: { theme: 'hint', displayName: 'Us User' } },
-            { username: 'computer', password: 'delete', data: { theme: 'mystery', displayName: 'Computer User' } },
+            { username: 'computer', password: 'DELETE', data: { theme: 'mystery', displayName: 'Computer User' } },
             { username: 'holoville', password: 'ignite', data: { theme: 'mystery', displayName: 'Universal account' } }
         ];
         
@@ -211,7 +131,7 @@
                     document.getElementById('username').value = username;
                     document.getElementById('password').value = password;
                     applyTheme(username);
-                    proceedToMainPage();
+                    proceedToMainPage(username);
                 }
             }
         });
@@ -235,7 +155,7 @@
                 // Store user data in local storage for future use
                 localStorage.setItem('themeColor', user.data.themeColor);
                 sessionStorage.setItem('userData', JSON.stringify(user.data));
-                showUserInfo(username);
+                proceedToMainPage(username);
             } else {
                 failedAttempts++;
                 handleFailedAttempts(username);
@@ -244,7 +164,7 @@
             }
         }
 
-        function proceedToMainPage() {
+        function proceedToMainPage(username) {
             if (username === 'SOMETHINGINTERNAL') {
                 window.location.href = 'secret1.html';
             } else if (username === 'us_us_us') {
@@ -304,64 +224,6 @@
                 window.location.href = 'hint3.html';
             }
         }
-            if (username === 'larry' && failedAttempts === 3) {
-                const warningContainer = document.getElementById('warning-container');
-                if (!warningContainer.querySelector('.warning-text')) {
-                    for (let i = 0; i < 10; i++) {
-                        const warningMessage = document.createElement('div');
-                        warningMessage.className = 'warning-text';
-                        warningMessage.textContent = 'cGFydHRpbWV0ZWFjaGVy';
-                        warningMessage.style.position = 'absolute';
-                        warningMessage.style.top = `${Math.random() * 100}%`;
-                        warningMessage.style.left = `${Math.random() * 100}%`;
-                        warningMessage.style.color = 'red';
-                        warningMessage.style.fontWeight = 'bold';
-                        warningMessage.style.fontSize = '1.2em';
-                        document.body.appendChild(warningMessage);
-                    }
-                }
-            }
-            if (username === 'guy' && failedAttempts >= 3) {
-                startHolidayEffect();
-            }
-            if (username === 'joey' && failedAttempts >= 3) {
-                startSoccerBallEffect();
-            }
-            if (username === 'SOMETHINGINTERNAL' && failedAttempts >= 3) {
-                window.location.href = 'hint1.html';
-            }
-            if (username === 'us_us_us' && failedAttempts >= 3) {
-                window.location.href = 'hint2.html';
-            }
-            if (username === 'computer' && failedAttempts >= 3) {
-                window.location.href = 'hint3.html';
-            }
-        
-            if (username === 'larry' && failedAttempts === 3) {
-                const warningContainer = document.getElementById('warning-container');
-                if (!warningContainer.querySelector('.warning-text')) {
-                    const warningMessage = document.createElement('div');
-                    warningMessage.className = 'warning-text';
-                    warningMessage.textContent = 'cGFydHRpbWV0ZWFjaGVy';
-                    warningContainer.appendChild(warningMessage);
-                }
-            }
-            if (username === 'guy' && failedAttempts >= 3) {
-                startHolidayEffect();
-            }
-            if (username === 'joey' && failedAttempts >= 3) {
-                startSoccerBallEffect();
-            }
-            if (username === 'SOMETHINGINTERNAL' && failedAttempts >= 3) {
-                window.location.href = 'hint1.html';
-            }
-            if (username === 'us_us_us' && failedAttempts >= 3) {
-                window.location.href = 'hint2.html';
-            }
-            if (username === 'computer' && failedAttempts >= 3) {
-                window.location.href = 'hint3.html';
-            }
-    
 
         function startHolidayEffect() {
             setInterval(() => {
@@ -409,68 +271,6 @@
                 login();
             }
         });
-    </script>
-    <div class="userinfo-container" id="userinfo" style="display: none;">
-        <div class="userinfo-box">
-            <h2>Is this you?</h2>
-            <img id="user-pfp" src="" alt="User Profile Picture" class="profile-picture">
-            <p id="display-name"></p>
-            <button onclick="proceedToMainPage()">Yes</button>
-        </div>
-    </div>
-
-    <script>
-        function showUserInfo(username) {
-            const userInfo = document.getElementById('userinfo');
-            const loginContainer = document.querySelector('.login-container');
-            const displayName = document.getElementById('display-name');
-            const userPfp = document.getElementById('user-pfp');
-            
-            const pfpMapping = {
-                'joey': 'joey.png',
-                'larry': 'larry.png',
-                'guy': 'guy.png',
-                'gary': 'gary.png',
-                'holoville': 'universal.png'
-            };
-            
-            const user = users.find(cred => cred.username === username);
-            if (user) {
-                userInfo.style.display = 'flex';
-                loginContainer.style.display = 'none';
-                displayName.textContent = user.data.displayName;
-                userPfp.src = pfpMapping[username] || '';
-            }
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('remember-me').checked;
-            const user = users.find(cred => cred.username === username && cred.password === password);
-            
-            if (user) {
-                if (rememberMe) {
-                    localStorage.setItem('rememberMe', 'true');
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('password', password);
-                } else {
-                    localStorage.removeItem('rememberMe');
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('password');
-                }
-                // Store user data in local storage for future use
-                localStorage.setItem('themeColor', user.data.themeColor);
-                sessionStorage.setItem('userData', JSON.stringify(user.data));
-                showUserInfo(username);
-            } else {
-                failedAttempts++;
-                handleFailedAttempts(username);
-                const warningContainer = document.getElementById('warning-container');
-                warningContainer.innerHTML = '<p style="color: red; font-weight: bold;">Invalid username or password. Please try again.</p>';
-            }
-        }
-
     </script>
 </body>
 </html>
