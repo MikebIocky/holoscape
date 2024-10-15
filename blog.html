@@ -346,20 +346,24 @@
         }
 
         function deployProject() {
-            fetch('https://api.cloudflare.com/client/v4/accounts/4970ae1534c76f6630ce684cb25a940a/pages/projects/holoscape.site/deployments', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer 913bd865fec1af8ffbc06650ba3b97febfde8'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Deployment status:', data);
-            })
-            .catch(error => {
-                console.error('Error fetching deployment status:', error);
-            });
+    fetch('http://localhost:3000/api/deployments', {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Deployment status:', data);
+    })
+    .catch(error => {
+        console.error('Error fetching deployment status:', error);
+    });
+}
+
+
     </script>
 </head>
 <body>
