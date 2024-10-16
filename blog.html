@@ -84,14 +84,33 @@
         }
 
         function savePost(post) {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.push(post);
-            localStorage.setItem('posts', JSON.stringify(posts));
+            // Save post as a markdown file to the server
+            fetch('http://localhost:3000/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Post saved:', data);
+                })
+                .catch(error => {
+                    console.error('Error saving post:', error);
+                });
         }
 
         function loadPosts() {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.forEach(post => renderPost(post));
+            // Load posts from the server
+            fetch('http://localhost:3000/api/posts')
+                .then(response => response.json())
+                .then(posts => {
+                    posts.forEach(post => renderPost(post));
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                });
         }
 
         function renderPost(post) {
@@ -165,22 +184,30 @@
 
             if (replyText === '') return;
 
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts.find(p => new Date(p.date).toLocaleString('en-US', { timeZone: 'America/New_York' }) === postDate);
             const reply = {
                 author: replyAuthor,
                 content: replyText
             };
 
-            if (post) {
-                post.replies.push(reply);
-                localStorage.setItem('posts', JSON.stringify(posts));
-            }
-
-            const replyElement = document.createElement('div');
-            replyElement.className = 'reply';
-            replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
-            postElement.querySelector('.replies-container').appendChild(replyElement);
+            // Save reply to the server
+            fetch(`http://localhost:3000/api/posts/reply`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ postDate, reply }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Reply saved:', data);
+                    const replyElement = document.createElement('div');
+                    replyElement.className = 'reply';
+                    replyElement.innerHTML = `<strong>${reply.author}:</strong> ${reply.content}`;
+                    postElement.querySelector('.replies-container').appendChild(replyElement);
+                })
+                .catch(error => {
+                    console.error('Error saving reply:', error);
+                });
 
             replyForm.querySelector('.reply-author').value = '';
             replyForm.querySelector('.reply-text').value = '';
